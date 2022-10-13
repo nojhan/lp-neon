@@ -37,35 +37,35 @@ _lp_neon_theme_activate() {
     local warn="$lp_terminal_format"
 
     local p="$primary"
-    local n="$NO_COL"
+    local nc="$NO_COL"
 
-    NEON_MARK_BRACKET_OPEN="${NEON_MARK_BRACKET_OPEN:-┥}"
-    LP_MARK_BRACKET_OPEN="$p${NEON_MARK_BRACKET_OPEN}$n"
+    # NEON_MARK_BRACKET_OPEN="${NEON_MARK_BRACKET_OPEN:-┥}"
+    LP_MARK_BRACKET_OPEN="$p┥${nc}"
 
-    NEON_MARK_BRACKET_CLOSE="${NEON_MARK_BRACKET_CLOSE:-┝}"
-    LP_MARK_BRACKET_CLOSE="$p${NEON_MARK_BRACKET_CLOSE}$n"
+    # NEON_MARK_BRACKET_CLOSE="${NEON_MARK_BRACKET_CLOSE:-┝}"
+    LP_MARK_BRACKET_CLOSE="$p┝${nc}"
 
-    NEON_MARK_MULTIPLEXER_OPEN="${NEON_MARK_MULTIPLEXER_OPEN:-╣}"
-    NEON_MARK_MULTIPLEXER_CLOSE="${NEON_MARK_MULTIPLEXER_CLOSE:-╠}"
-    NEON_MARK_PERM="${NEON_MARK_PERM:-╏}"
-    NEON_MARK_SHORTEN_PATH="${NEON_MARK_SHORTEN_PATH:-┈}"
-    NEON_MARK_DIRSTACK="${NEON_MARK_DIRSTACK:-☰}"
-    NEON_MARK_SHLVL="${NEON_MARK_SHLVL:->}"
-    NEON_MARK_JOBS_SEPARATOR="${NEON_MARK_JOBS_SEPARATOR:-┄}"
-    NEON_MARK_WIFI="${NEON_MARK_WIFI:-╜}"
+    # NEON_MARK_MULTIPLEXER_OPEN="${NEON_MARK_MULTIPLEXER_OPEN:-╣}"
+    # NEON_MARK_MULTIPLEXER_CLOSE="${NEON_MARK_MULTIPLEXER_CLOSE:-╠}"
+    # NEON_MARK_PERM="${NEON_MARK_PERM:-╏}"
+    # NEON_MARK_SHORTEN_PATH="${NEON_MARK_SHORTEN_PATH:-┈}"
+    # NEON_MARK_DIRSTACK="${NEON_MARK_DIRSTACK:-☰}"
+    # NEON_MARK_SHLVL="${NEON_MARK_SHLVL:->}"
+    # NEON_MARK_JOBS_SEPARATOR="${NEON_MARK_JOBS_SEPARATOR:-┄}"
+    # NEON_MARK_WIFI="${NEON_MARK_WIFI:-╜}"
 
     #
     # Theme configuration.
     #
 
-    LP_MARK_MULTIPLEXER_OPEN="${NEON_MARK_MULTIPLEXER_OPEN}"
-    LP_MARK_MULTIPLEXER_CLOSE="${NEON_MARK_MULTIPLEXER_CLOSE}"
-    LP_MARK_PERM="${NEON_MARK_PERM}"
-    LP_MARK_SHORTEN_PATH="${NEON_MARK_SHORTEN_PATH}"
-    LP_MARK_DIRSTACK="${NEON_MARK_DIRSTACK}"
-    LP_MARK_SHLVL="${NEON_MARK_SHLVL}"
-    LP_MARK_JOBS_SEPARATOR="${secondary}${NEON_MARK_JOBS_SEPARATOR}${n}"
-    LP_MARK_WIFI="${NEON_MARK_WIFI}"
+    LP_MARK_MULTIPLEXER_OPEN="╣"
+    LP_MARK_MULTIPLEXER_CLOSE="╠"
+    LP_MARK_PERM="╏"
+    LP_MARK_SHORTEN_PATH="┈"
+    LP_MARK_DIRSTACK="☰"
+    LP_MARK_SHLVL=">"
+    LP_MARK_JOBS_SEPARATOR="${secondary}┄${nc}"
+    LP_MARK_WIFI="╜"
 
     LP_COLOR_PATH=$primary
     LP_COLOR_PATH_SEPARATOR=$primary
@@ -119,7 +119,7 @@ _lp_neon_theme_activate() {
 _lp_neon_theme_directory() {
     _lp_default_theme_directory
     local lp_path_format
-    _lp_path_format "$LP_COLOR_PATH" "$LP_COLOR_PATH_LAST_DIR" "$LP_COLOR_PATH_VCS_ROOT" "$LP_COLOR_PATH_SHORTENED" "" "$LP_COLOR_PATH_SEPARATOR"
+    _lp_path_format "$LP_COLOR_PATH" "$LP_COLOR_PATH_LAST_DIR" "$LP_COLOR_PATH_VCS_ROOT" "$LP_COLOR_PATH_SHORTENED" "/" "$LP_COLOR_PATH_SEPARATOR"
 
     LP_PWD="${lp_path_format}${NO_COL}"
 }
@@ -272,19 +272,20 @@ _lp_neon_theme_prompt_template() {
         local s="$lp_terminal_format"
         lp_terminal_format "${NEON_PROMPT_COLOR[@]}"
         local p="$lp_terminal_format"
-        local n="$NO_COL"
+        local nc="$NO_COL"
         # ━┝┌─└─⤙⤚⤛⤜
-        first_left="$s${LP_PS1_PREFIX}─$n${LP_JOBS}$s─$n${LP_BATT}$s─$n${LP_WIFI}$s─$n${LP_LOAD}$s─$n${LP_TEMP}$s─$n${LP_PROXY}"
-        first_right="$s┄｢$n${LP_SCLS}${LP_AWS_PROFILE}${LP_CONTAINER}${LP_VENV}${LP_NODE_VENV}${LP_RUBY_VENV}${LP_TFSPACE}${LP_KUBECONTEXT}$s｣┄─$n${LP_TIME}$s─⎸$n"
-        first="${first_left}$s─$n${first_right}"
+        first_left="$s${LP_PS1_PREFIX}─${nc}${LP_JOBS}$s─${nc}${LP_BATT}$s─${nc}${LP_WIFI}$s─${nc}${LP_LOAD}$s─${nc}${LP_TEMP}$s─${nc}${LP_PROXY}"
+        first_right="$s┄｢${nc}${LP_SCLS}${LP_AWS_PROFILE}${LP_CONTAINER}${LP_VENV}${LP_NODE_VENV}${LP_RUBY_VENV}${LP_TFSPACE}${LP_KUBECONTEXT}$s｣┄─${nc}${LP_TIME}$s─⎸${nc}"
+        first="${first_left}$s─${nc}${first_right}"
 
-        second_left="${LP_BRACKET_OPEN}${LP_USER}${LP_HOST}${LP_PERM}${LP_PWD}${LP_BRACKET_CLOSE}$m═$n${LP_DIRSTACK}$m═╾$n"
+        second_left="${LP_BRACKET_OPEN}${LP_USER}${LP_HOST}${LP_PERM}${LP_PWD}${LP_BRACKET_CLOSE}$m═${nc}${LP_DIRSTACK}$m═╾${nc}"
         second_right="${LP_VCS}"
         second="${second_left}${second_right}"
 
-        third="${LP_RUNTIME}$p━$n${LP_ERR}$p━$n${LP_COLOR_MARK}${LP_MARK}$p${LP_SHLVL}$n "
+        third="${LP_RUNTIME}$p━${nc}${LP_ERR}$p━${nc}${LP_COLOR_MARK}${LP_MARK}$p${LP_SHLVL}${nc} "
 
-        PS1=" $s┌─$n${first}\n$m╔╧══$n${second}\n$p┗━$n${third}"
+        local n=$'\n'
+        PS1=" $s┌─${nc}${first}${n}$m╔╧══${nc}${second}${n}$p┗━${nc}${third}"
 
         # Get the core sections without prompt escapes and make them into a title.
         _lp_formatted_title "${LP_PS1_PREFIX}${LP_BRACKET_OPEN}${LP_USER}${LP_HOST}${LP_MARK_PERM}${lp_path-}${LP_BRACKET_CLOSE}${LP_MARK}"
